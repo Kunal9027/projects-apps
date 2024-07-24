@@ -1,0 +1,32 @@
+{% extends "elements/base.html" %}
+
+{% block "title" %}
+
+weather data
+
+{% endblock "title" %}
+
+
+
+{% block container %}
+
+<div class="max-w-sm mx-auto">
+    
+    <h1>Weather info</h1>
+    
+
+    <br>
+    <br>
+    
+    <p><strong>Location:</strong> {{ location }}</p>
+    <p><strong>temperature:</strong> {{ temperature }} Celcius</p>
+    <p><strong>humidity:</strong> {{ humidity }}</p>
+    <p><strong>dewpoint:</strong> {{ dewpoint }}</p>
+    <p><strong>rain_intensity:</strong> {{ rain_intensity }}</p>
+    <p><strong>uv_index:</strong> {{ uv_index }}</p>
+    <p><strong>wind_speed:</strong> {{ wind_speed }}</p>
+    
+</div>
+
+
+{% endblock container %}
