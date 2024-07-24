@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate , login , logout
 from django.contrib import messages
 
 from .weatherAPI import weather
-from .salaryModel import pre_salary
 
 # Create your views here.
 def home(request):
