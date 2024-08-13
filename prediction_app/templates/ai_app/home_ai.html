@@ -1,16 +1,28 @@
 {% extends "elements/base.html" %}
 
 {% block container %}
+<br>
 
-<div >
+<div class='font-semibold max-w-full mx-auto text-center text-3xl ' >
     
-    chat bot 
+    Chief bot 👨‍🍳🤖
    
 </div>
 
+<br>
+<br>
 {% include "ai_app/form_chat.html" %}
-
-
-
+<br>
+{% if chef_response %}
+<div class="bg-transparent max-w-4xl mx-auto rounded-lg shadow-md p-3">
+    <h2 class="text-gray-900 text-lg font-bold mb-4">Chef's Response</h2>
+    <div class="chat-container">  
+        <div class="chat-bubble bg-blue-200 text-gray-800 p-2 rounded-lg mb-2">
+            <p class="text-lg font-bold"></p>
+            <p class="text-lg">{{ chef_response }}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 {% endblock container %}
