@@ -12,22 +12,17 @@ weather app
 
 {% block container %}
 
-{% if user.is_authenticated %}
-
-
-
 {% include "weather/form.html" %}
+  
+<!--
+    {% if user.is_authenticated %}
 
-  
-  {% else %}
-  you are not logedin
-  <a class=" text-blue hover:text-blue-800 dark:hover:text-gray-300" href="{% url "login" %}"> click here</a>
-  
-  {% endif %}
-  
-  
-
-
-  
+    {% else %}
+    you are not logedin
+    <a class=" text-blue hover:text-blue-800 dark:hover:text-gray-300" href="{% url "login" %}"> click here</a>
+    
+    {% endif %}
+  -->
+ 
   
 {% endblock container %}

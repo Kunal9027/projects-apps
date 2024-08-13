@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'model_salary_predict',
+    'weather_app',
+    'ai_app',
+    
 ]
 
 MIDDLEWARE = [
