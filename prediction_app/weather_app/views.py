@@ -61,7 +61,7 @@ def predict_view(request):
         rain_intensity = data['data']['values']['rainIntensity']
         uv_index = data['data']['values']['uvIndex']
         wind_speed = data['data']['values']['windSpeed']
-        date_time = data['data']['time']
+        
         
         
         context= {
@@ -78,6 +78,6 @@ def predict_view(request):
         return render(request , "weather/apiINFO.html" , context)
 
         
-    return render(request , "weather/weather_app.html")
+    return render(request , "weather/weather_app.html" , context)
 
 
