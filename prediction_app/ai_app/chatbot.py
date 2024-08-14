@@ -1,7 +1,11 @@
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
+import os
+from dotenv import load_dotenv
 
-API_KEY = "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"
+load_dotenv()
+
+API_KEY = os.getenv('API_KEY')
 MODEL_NAME = "mixtral-8x7b-32768"
 
 def chef(text):

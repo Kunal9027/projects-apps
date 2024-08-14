@@ -1,6 +1,6 @@
 # ignore vendor static files
 src/static/vendor
-
+.env
 venv/
 saas.code-workspace
 
