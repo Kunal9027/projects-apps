@@ -1,21 +1,21 @@
 {% extends "elements/base.html" %}
 
 {% block container %}
-<br>
 
-<div class='font-semibold max-w-full mx-auto text-center text-3xl ' >
+
+<div class='font-semibold max-w-full mx-auto text-center text-3xl p-3' >
     
-    Chief bot 👨‍🍳🤖
+   <a href="{% url "chatbot" %}"> Chief bot 👨‍🍳🤖   </a>
    
 </div>
-<br>
-<div class='font-semibold max-w-full mx-auto text-center  ' >
+
+<div class='font-semibold max-w-full mx-auto text-center  p-3' >
     
     Ask me anything about food! I'm your Master-Chief assistant 🍽️🤖 ......
    
 </div>
 
-<br>
+
 {% include "ai_app/form_chat.html" %}
 <br>
 {% if chef_response %}
