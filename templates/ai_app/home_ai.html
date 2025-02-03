@@ -1,5 +1,7 @@
 {% extends "elements/base.html" %}
 
+{% block "title" %} Chief Bot {% endblock "title" %}
+
 {% block container %}
 
 
@@ -22,7 +24,7 @@
 <div class="bg-transparent max-w-4xl mx-auto rounded-lg shadow-md p-3">
     <h2 class="text-gray-900 text-lg font-bold mb-4">Chef's Response</h2>
     <div class="chat-container">  
-        <div class="chat-bubble bg-blue-200 text-gray-800 p-2 rounded-lg mb-2">
+        <div class="chat-bubble bg-transparent text-white p-2 rounded-lg mb-2">
             <p class="text-lg font-bold"></p>
             <p class="text-lg">{{ chef_response }}</p>
         </div>
