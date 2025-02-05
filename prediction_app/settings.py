@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,9 +27,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--@!$+9o4r0li329m8t562+xu^q1oewwgb=zea4ax5*#ake*1(&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["*"]
+
+DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() == 'true'
+
+# Set Allowed Hosts
+if DEBUG:
+    ALLOWED_HOSTS = ['*']  # For development
+else:
+    ALLOWED_HOSTS = ['resume-projects.onrender.com']
+
 
 
 # Application definition
@@ -40,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'weather_app',
     'ai_app',
+    'portfolio',
     
 ]
 

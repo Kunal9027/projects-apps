@@ -7,7 +7,7 @@ from .weatherAPI import weather
 # Create your views here.
 def home(request):
     
-    return render(request , "pages/index.html" )
+    return render(request , "pages/weather_app.html" )
 
 
 
