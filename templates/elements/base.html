@@ -98,7 +98,7 @@
   <div class="fixed inset-0 bg-gray-950/50 backdrop-blur-sm -z-10"></div>
 
   <!-- Your existing navbar -->
-  
+  {% include "elements/navbar.html" %}
 
   <!-- Main content container -->
   <div class="relative ">
@@ -107,9 +107,7 @@
 
   {% comment %} {% include "elements/footer.html" %} {% endcomment %}
   
-  
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
-  
   <script>
       // Generate random stars
       function createStars() {
