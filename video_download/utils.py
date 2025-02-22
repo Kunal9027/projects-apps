@@ -1,19 +1,28 @@
-# downloader/utils.py
 import os
-import browser_cookie3
 import tempfile
 from pathlib import Path
 
 def get_youtube_cookies():
     """Get cookies from browser and save them to a temporary file"""
     try:
-        # Try multiple browsers in order of popularity
-        browsers = [
-            (browser_cookie3.chrome, 'Chrome'),
-            (browser_cookie3.firefox, 'Firefox'),
-            (browser_cookie3.edge, 'Edge'),
-            (browser_cookie3.safari, 'Safari'),
-        ]
+        # Import browser_cookie3 conditionally
+        import browser_cookie3
+        
+        browsers = []
+        
+        # Add browsers based on platform
+        if os.name == 'nt':  # Windows
+            browsers = [
+                (browser_cookie3.chrome, 'Chrome'),
+                (browser_cookie3.firefox, 'Firefox'),
+                (browser_cookie3.edge, 'Edge'),
+            ]
+        else:  # Linux/Mac
+            browsers = [
+                (browser_cookie3.chrome, 'Chrome'),
+                (browser_cookie3.firefox, 'Firefox'),
+                (browser_cookie3.chromium, 'Chromium'),
+            ]
         
         cookie_file = tempfile.NamedTemporaryFile(delete=False, suffix='.txt')
         

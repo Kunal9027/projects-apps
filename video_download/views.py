@@ -65,40 +65,34 @@ def get_platform(url):
 #         return {'success': False, 'error': str(e)}
 
 
-
 def extract_video_url(url, platform):
     """Extract video URL using yt-dlp with platform-specific options"""
     ydl_opts = {
-        'format': 'best',  # Get best quality
+        'format': 'best',
         'quiet': True,
         'no_warnings': True,
         'extract_flat': False,
+        'no_check_certificate': True,  # Add this for server environments
     }
     
-    # Add cookies for YouTube
+    # For YouTube, try without cookies first
     if platform == 'youtube':
-        cookie_file = get_youtube_cookies()
-        if cookie_file:
-            ydl_opts['cookiefile'] = cookie_file
-    
-    # Platform-specific options
-    if platform == 'facebook':
-        ydl_opts.update({
-            'facebook_dl_timeout': 30,
-        })
-    elif platform == 'reddit':
-        ydl_opts.update({
-            'extract_flat': True,
-        })
-    elif platform == 'instagram':
-        return get_instagram_link(url)
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(url, download=False)
+                return {'success': True, 'url': info['url'], 'title': info.get('title', '')}
+        except:
+            # If failed, try with cookies
+            cookie_file = get_youtube_cookies()
+            if cookie_file:
+                ydl_opts['cookiefile'] = cookie_file
     
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=False)
             
             # Clean up cookie file if it exists
-            if platform == 'youtube' and 'cookiefile' in ydl_opts:
+            if 'cookiefile' in ydl_opts and os.path.exists(ydl_opts['cookiefile']):
                 try:
                     os.unlink(ydl_opts['cookiefile'])
                 except:
@@ -111,24 +105,15 @@ def extract_video_url(url, platform):
                 return {'success': True, 'url': first_video['url'], 'title': first_video.get('title', '')}
             else:
                 return {'success': False, 'error': 'No video URL found'}
-    except yt_dlp.utils.DownloadError as e:
-        error_message = str(e)
-        if "Sign in to confirm you're not a bot" in error_message:
+    except Exception as e:
+        error_msg = str(e)
+        if "Sign in to confirm you're not a bot" in error_msg:
             return {
                 'success': False,
-                'error': 'YouTube verification required. Please try again in a few minutes or use a different video.',
+                'error': 'Server is being rate limited. Please try again in a few minutes.',
                 'user_friendly': True
             }
-        return {'success': False, 'error': error_message}
-    except Exception as e:
-        return {'success': False, 'error': str(e)}
-    finally:
-        # Ensure cookie file cleanup
-        if platform == 'youtube' and 'cookiefile' in ydl_opts:
-            try:
-                os.unlink(ydl_opts['cookiefile'])
-            except:
-                pass
+        return {'success': False, 'error': error_msg}
 
 
 def get_instagram_link(url):
