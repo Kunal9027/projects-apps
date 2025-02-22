@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'weather_app',
     'ai_app',
     'portfolio',
-    
+    'video_download',
+        
 ]
 
 MIDDLEWARE = [
