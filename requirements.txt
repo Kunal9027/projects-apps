@@ -17,6 +17,7 @@ h11==0.14.0
 httpcore==1.0.5
 httpx==0.27.0
 idna==3.7
+instaloader==4.14.1
 joblib==1.4.2
 jsonpatch==1.33
 jsonpointer==3.0.0
@@ -50,3 +51,4 @@ typing_extensions==4.12.2
 tzdata==2024.1
 urllib3==2.2.2
 yarl==1.9.4
+yt-dlp==2025.2.19
