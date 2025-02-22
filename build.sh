@@ -4,17 +4,7 @@
 # exit on error
 set -o errexit
 
-# Upgrade pip
 python -m pip install --upgrade pip
-
-# Install platform-specific requirements
-if [ "$(uname)" == "Linux" ]; then
-    pip install -r requirements.txt --no-deps
-    pip install django yt-dlp instaloader browser-cookie3 gunicorn
-else
-    pip install -r requirements.txt
-fi
-
-# Run Django commands
-python manage.py collectstatic --no-input
+pip install -r requirements.txt
+python manage.py collectstatic --no-input  #static files collection
 python manage.py migrate
