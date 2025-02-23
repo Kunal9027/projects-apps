@@ -110,56 +110,39 @@
         <div id="result"></div>
     </div>
 
-    
-<script>
-    document.getElementById('downloadForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const form = e.target;
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = '<div class="loading"></div> Processing your request...';
-        
-        fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: {
-                'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                resultDiv.innerHTML = `
-                    <div class="success">
-                        <h3>Video Found on ${data.platform.charAt(0).toUpperCase() + data.platform.slice(1)}</h3>
-                        <p>Title: ${data.title || 'Untitled'}</p>
-                        <a href="${data.url}" class="download-link" target="_blank">Download Video</a>
-                    </div>
-                `;
-            } else {
-                let errorMessage = data.error;
-                if (data.user_friendly) {
+    <script>
+        document.getElementById('downloadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<div class="loading"></div> Processing your request...';
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
                     resultDiv.innerHTML = `
-                        <div class="error">
-                            <p>${errorMessage}</p>
-                            <p>This is a common issue with YouTube's bot detection. You can try:</p>
-                            <ul>
-                                <li>Waiting a few minutes and trying again</li>
-                                <li>Using a different video</li>
-                                <li>Using a different browser</li>
-                            </ul>
+                        <div class="success">
+                            <h3>Video Found on ${data.platform.charAt(0).toUpperCase() + data.platform.slice(1)}</h3>
+                            <p>Title: ${data.title || 'Untitled'}</p>
+                            <a href="${data.url}" class="download-link" target="_blank">Download Video</a>
                         </div>
                     `;
                 } else {
-                    resultDiv.innerHTML = `<p class="error">Error: ${errorMessage}</p>`;
+                    resultDiv.innerHTML = `<p class="error">Error: ${data.error}</p>`;
                 }
-            }
-        })
-        .catch(error => {
-            resultDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            })
+            .catch(error => {
+                resultDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            });
         });
-    });
-</script>
-
+    </script>
 </body>
 </html>
