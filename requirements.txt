@@ -38,6 +38,7 @@ pydantic_core==2.20.1
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 pytz==2024.1
+pywin32==308
 PyYAML==6.0.2
 requests==2.32.3
 scikit-learn==1.5.1
@@ -53,4 +54,5 @@ typing_extensions==4.12.2
 tzdata==2024.1
 urllib3==2.2.2
 whitenoise==6.9.0
+WMI==1.5.1
 yarl==1.9.4
