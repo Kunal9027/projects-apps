@@ -23,7 +23,7 @@ urlpatterns = [
     path('', include('ai_app.urls')),
     path('', include('weather_app.urls')),
     path('', include('portfolio.urls')),
-    # path('', include('video_download.urls')),
+    
 ]
 
 
