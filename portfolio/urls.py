@@ -5,6 +5,6 @@ from .views import portfoilio_page
 
 urlpatterns = [
    
-   path('', portfoilio_page, name='portfoilio_page'),
+   path('mywebsite', portfoilio_page, name='portfoilio_page'),
 
 ]

@@ -12,7 +12,7 @@
     }
     
     body {
-      overflow: hidden;
+      overflow: auto;
       background-color: #050a18;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       height: 100vh;
@@ -21,7 +21,7 @@
     }
     
     #canvas {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
@@ -33,29 +33,65 @@
       position: relative;
       z-index: 1;
       display: flex;
+      flex-direction: column; 
       justify-content: center;
       align-items: center;
-      height: 100%%;
+      height: auto; /* Change from 100% to auto to accommodate all content */
+      min-height: 100vh; /* Ensure it takes at least the full viewport height */
       width: 100%;
       text-align: center;
-      {% comment %} padding: 20px; {% endcomment %}
+      padding: 20px; 
       top: 0;
       left: 0;
     }
     
     .content-inner {
-      {% comment %} background: rgba(16, 25, 56, 0.3); {% endcomment %}
+      background: rgba(16, 25, 56, 0.5);
       background: transparent;
       top: 0;
-      left: 0;
-      {% comment %} padding: 2rem; {% endcomment %}
+      left: 0;      
+      width: 100%; /* Ensure full width */
+      
       border-radius: 8px;
       max-width: 100%;
-      {% comment %} backdrop-filter: blur(8px); {% endcomment %}
-      {% comment %} border: 1px solid rgba(103, 151, 255, 0.3); {% endcomment %}
-      {% comment %} box-shadow: 0 4px 30px rgba(0, 83, 255, 0.2); {% endcomment %}
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(103, 151, 255, 0.3);
+      box-shadow: 0 4px 30px rgba(0, 83, 255, 0.4);
+      padding: 10px;
+      margin: 10px; /* Center the content with margin */
+    }
+
+    .content-inner-1 {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+       /* Optional: space between items */
     }
     
+    /* Optional: make each inner content box flexible */
+    .content-inner {
+      flex: 1 1 45%; /* Adjust width and allow wrapping */
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 768px) {
+      .content-inner-1 {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    
+      .content-inner {
+        width: 100%;
+      }
+    }
+   
+
+    /* Navbar styles */
+
+ 
+
     h1 {
       font-size: 2.5rem;
       margin-bottom: 1rem;
@@ -76,13 +112,54 @@
   <canvas id="canvas"></canvas>
   
   <div class="content">
-    <div class="content-inner">
+      
+    
       <h1>Neural Network</h1>
       <p>An interactive neural mesh background that responds to your cursor movements. Ideal for AI, machine learning, or data Ideal for AI, machine learning, or datascience projects.An interactive neural mesh background that responds to your cursor movements. Ideal for AI, machine learning, or data Ideal for AI, machine learning, or datascience projects.</p>
-        
-     
-    </div>
+    
+
   </div>
+
+  <div class="content" >
+   
+    
+    <div class="content-inner-1" >
+      <div class="content-inner" >
+        <div >
+          <h1>Neural Network</h1>
+          <p>An interactive neural mesh background that responds to your cursor movements. Ideal for AI, machine learning, or data Ideal for AI, machine learning, or datascience projects.An interactive neural mesh background that responds to your cursor movements. Ideal for AI, machine learning, or data Ideal for AI, machine learning, or datascience projects.</p>
+        </div>
+      </div>
+  
+      <div class="content-inner" >
+      <div >
+        <h1>Neural Network</h1>
+        <p>An interactive neural mesh background that responds to your cursor movements. Ideal for AI, machine learning, or data Ideal for AI, machine learning, or datascience projects.An interactive neural mesh background that responds to your cursor movements. Ideal for AI, machine learning, or data Ideal for AI, machine learning, or datascience projects.</p>
+      </div>
+    </div>
+
+    </div>
+
+  <div class="content" >
+    <h1>Neural Network</h1>
+    <p>An interactive neural mesh background that responds to your cursor movements. Ideal for AI, machine learning, or data Ideal for AI, machine learning, or datascience projects.An interactive neural mesh background that responds to your cursor movements. Ideal for AI, machine learning, or data Ideal for AI, machine learning, or datascience projects.</p>
+  </div>
+    
+    
+    
+  
+  
+
+  </div>
+
+  <script
+    const toggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    toggle.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+</script>    
 
   <script>
     const canvas = document.getElementById('canvas');
@@ -286,7 +363,7 @@
         cursorGradient.addColorStop(1, 'rgba(156, 217, 255, 0)');
         ctx.fillStyle = cursorGradient;
         ctx.fill();
-      }
+      } 
     }
     
     // Initialize and start animation

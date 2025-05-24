@@ -39,4 +39,4 @@ def chatbot(request):
         except Exception as e:
             context = { "error": f"Unexpected Error: {e}", "raw_response": chef_response }
 
-    return render(request, 'Backgrounds/food_BG.html', context)
+    return render(request, 'ai_app/food_BG.html', context)

@@ -452,7 +452,7 @@
           <li class="nav-item"><a href="/chefbot" class="nav-link">Home</a></li>
          
           <li class="nav-item"><a href="#About-section" class="nav-link">About</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Github</a></li>
+          <li class="nav-item"><a href="https://github.com/Kunal9027/Chef_bot" class="nav-link">Github</a></li>
           
         </ul>
       </div>
@@ -464,7 +464,7 @@
   <p style="color: grey;">Craving a recipe? Need cooking tips? Ask anything  TastyEats AI is your smart, instant guide to delicious food, anytime.</p>
 
     <section class="search-section">
-      <form method="post" class="search-form" >
+      <form autocomplete="off" method="post" class="search-form" >
         {% csrf_token %}
         <input type="search" id="cheif" name="cheif" class="search-input" placeholder="Search for recipes, ingredients, or cuisines...">
         <button type="submit" class="search-button">Ask Chef</button>
@@ -559,21 +559,17 @@
     <div id="About-section" class="footer-container">
       <div class="footer-section">
         <h3>About TastyEats</h3>
-<p>At TastyEats, we believe smart cooking is the future. That’s why we built an AI that helps you explore recipes, improve your skills, and enjoy food like never before — all with just one question.</p>
+  <p>At TastyEats, we believe smart cooking is the future. That’s why we built an AI that helps you explore recipes, improve your skills, and enjoy food like never before — all with just one question.</p>
 
       </div>
       
-      {% comment %} <div class="footer-section">
-        <h3>Opening Hours</h3>
-        <p>Monday - Friday: 11am - 10pm</p>
-        <p>Saturday - Sunday: 10am - 11pm</p>
-      </div> {% endcomment %}
+      
       
       <div class="footer-section">
         <h3>Quick Links</h3>
         <ul class="footer-links">
           <li><a href="/chefbot">Home</a></li>
-          <li><a href="/">My Portfolio</a></li>
+          
           <li><a href="#">Reservations</a></li>
           <li><a href="#">Gallery</a></li>
           
