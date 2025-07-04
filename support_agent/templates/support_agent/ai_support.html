@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rakuten AI Support - Get Help Instantly</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #e60012 0%, #bf000f 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(230, 0, 18, 0.3);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+            to { text-shadow: 0 0 20px rgba(255,255,255,0.8); }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(230,0,18,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #e60012;
+            animation: slideDown 1s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #666;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Hero Search Input */
+        .hero-search {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .hero-search input {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .hero-search input:focus {
+            border-color: #e60012;
+            box-shadow: 0 5px 25px rgba(230,0,18,0.2);
+        }
+        
+        .hero-search .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #e60012;
+            font-size: 1.3rem;
+        }
+
+        /* Services Grid */
+        .services {
+            padding: 4rem 0;
+            background: white;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .services h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #e60012;
+            margin-bottom: 3rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(230,0,18,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(230,0,18,0.2);
+            border-color: #e60012;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: #e60012;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Chat Interface */
+        .chat-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-section.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 80px auto 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+            overflow: hidden;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #e60012 0%, #bf000f 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255,255,255,0.4);
+        }
+        
+        .chat-title {
+            flex: 1;
+            text-align: center;
+        }
+
+        .chat-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, white, transparent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: #fafafa;
+            flex: 1;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 15px;
+            animation: messageSlide 0.3s ease-out;
+        }
+
+        @keyframes messageSlide {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .user-message {
+            background: #e60012;
+            color: white;
+            margin-left: 20%;
+            text-align: right;
+        }
+
+        .bot-message {
+            background: white;
+            color: #333;
+            margin-right: 20%;
+            border: 1px solid #ddd;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input input:focus {
+            border-color: #e60012;
+            box-shadow: 0 0 10px rgba(230,0,18,0.2);
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #e60012 0%, #bf000f 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            margin-left: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(230,0,18,0.3);
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 4rem 0;
+            background: white;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .faq h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #e60012;
+            margin-bottom: 3rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: #e60012;
+            box-shadow: 0 5px 15px rgba(230,0,18,0.1);
+        }
+
+        .faq-question {
+            background: #f8f8f8;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #e60012;
+            color: white;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .faq-answer.active {
+            padding: 1.5rem;
+            max-height: 200px;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-toggle.active {
+            transform: rotate(45deg);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #333 0%, #222 100%);
+            color: white;
+            padding: 3rem 0 1rem;
+            text-align: center;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #e60012;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #e60012;
+        }
+
+        /* Page transitions */
+        .page-section {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .hidden-section {
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chat-input {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .send-btn {
+                margin-left: 0;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #e60012;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="logo">🛍️ Rakuten AI Support</a>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero page-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Get Instant Help with All Rakuten Services</h1>
+                <p>One unified AI support portal for Shopping, Banking, Mobile, Travel, and more. No more searching multiple websites!</p>
+                
+                <!-- New Hero Search Input -->
+                <div class="hero-search">
+                    <input type="text" id="heroSearchInput" placeholder="Ask a question or describe your issue..." autofocus>
+                    <span class="search-icon">🔍</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services page-section" id="services">
+        <div class="container">
+            <h2>All Rakuten Services in One Place</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <span class="service-icon">🛒</span>
+                    <h3>Rakuten Shopping</h3>
+                    <p>Issues with orders, returns, cashback, product inquiries, and marketplace problems.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🏦</span>
+                    <h3>Rakuten Bank</h3>
+                    <p>Banking services, account issues, transfers, loans, and financial product support.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">📱</span>
+                    <h3>Rakuten Mobile</h3>
+                    <p>Mobile plans, network issues, billing, device support, and service activation.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">✈️</span>
+                    <h3>Rakuten Travel</h3>
+                    <p>Hotel bookings, flight reservations, cancellations, and travel-related queries.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">💳</span>
+                    <h3>Rakuten Card</h3>
+                    <p>Credit card applications, payments, rewards, statements, and card issues.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🎮</span>
+                    <h3>Rakuten Games</h3>
+                    <p>Gaming platform issues, account problems, purchases, and technical support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Section -->
+    <section class="chat-section" id="chat">
+        <div class="container">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <button class="back-btn" onclick="hideChat()">
+                        <span>⬅</span> Back to FAQs
+                    </button>
+                    <div class="chat-title

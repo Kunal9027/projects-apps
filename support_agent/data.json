@@ -1,0 +1,15 @@
+[
+    {
+      "question": "I have not received Rakuten Points for items that I have bought at Rakuten.",
+      "answer": "In case of problems with orders or points on Rakuten, please contact Rakuten Customer Support here: https://www.rakuten.co.jp/help/. *Support is only in Japanese."
+    },
+    {
+      "question": "I forgot my log-in ID and password. What should I do?",
+      "answer": "You can reset your password from the Account Information Page of Rakuten Ichiba."
+    },
+    {
+      "question": "Even though I already paid GST/VAT to Rakuten Global Express, I was asked to pay it again during import. What should I do?",
+      "answer": "If you already paid GST to Rakuten Global Express but were re-invoiced, you can get a refund via your payment method, Japanese bank transfer, or Rakuten points. Submit your receipt and select 'duplicate GST/VAT payment'."
+    }
+  ]
+  

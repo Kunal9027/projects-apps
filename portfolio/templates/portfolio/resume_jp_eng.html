@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>履歴書 - Kunal Chaudhary - Software Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2d3748;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .resume-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .resume-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4a5568, #718096, #a0aec0);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            color: white;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .language-toggle {
+            position: absolute;
+            top: 10px;
+            right: 40px;
+            z-index: 10;
+        }
+
+        @media (min-width: 769px) {
+            .language-toggle {
+                top: 10px;
+                right: 60px;
+            }
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 16px;
+            margin: 0 4px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.4);
+            transform: scale(1.05);
+        }
+
+        .lang-btn:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        .header-text h1 {
+            font-size: 2.8em;
+            margin-bottom: 8px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            opacity: 0;
+            animation: slideInLeft 0.8s ease 0.2s forwards;
+        }
+
+        .header-text .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: slideInLeft 0.8s ease 0.4s forwards;
+        }
+
+        .header-text .role {
+            font-size: 1.1em;
+            color: #a0aec0;
+            font-weight: 400;
+            opacity: 0;
+            animation: slideInLeft 0.8s ease 0.6s forwards;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .photo-section {
+            width: 140px;
+            height: 180px;
+            border: 4px solid rgba(255,255,255,0.2);
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #718096;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: slideInRight 0.8s ease 0.5s forwards;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%; 
+            object-fit: cover; 
+            border-radius: 4px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .photo-section:hover {
+            transform: scale(1.02);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .section {
+            border-bottom: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            min-height: 180px;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .section:nth-child(even) {
+            border-right: none;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+        .section:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #4a5568, #2d3748);
+            color: white;
+            padding: 18px 25px;
+            font-weight: 600;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 3s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .section-content {
+            padding: 25px;
+            background: #f7fafc;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 130px 1fr;
+            gap: 15px;
+            margin-bottom: 18px;
+            align-items: center;
+        }
+
+        .info-grid:last-child {
+            margin-bottom: 0;
+        }
+
+        .label {
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .value {
+            color: #2d3748;
+            padding: 8px 0;
+            border-bottom: 2px solid #e2e8f0;
+            font-weight: 500;
+            transition: border-color 0.3s ease;
+        }
+
+        .value:hover {
+            border-color: #a0aec0;
+        }
+
+        .skill-category {
+            margin-bottom: 20px;
+        }
+
+        .skill-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-category-title {
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, #718096, #4a5568);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 85, 104, 0.3);
+        }
+
+        .education-item, .project-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #718096;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .education-item:hover, .project-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .education-item:last-child, .project-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .degree, .project-name {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .university, .project-tech {
+            color: #718096;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .project-tech {
+            font-size: 12px;
+            background: #e2e8f0;
+            padding: 4px 8px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .year, .description {
+            color: #4a5568;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: linear-gradient(135deg, #718096, #4a5568);
+            padding: 25px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .contact-item {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 15px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .contact-item:hover::before {
+            left: 100%;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .contact-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #e2e8f0;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item:hover .contact-icon {
+            color: #ffffff;
+        }
+
+        .contact-text {
+            font-size: 13px;
+            color: #e2e8f0;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .achievement-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-left: 4px solid #68d391;
+            border-radius: 0 6px 6px 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .achievement-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .achievement-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 4px;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .project-link {
+            background: linear-gradient(135deg, #718096, #4a5568);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 85, 104, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        .contribution-item {
+            background: white;
+            padding: 18px;
+            margin-bottom: 12px;
+            border-left: 4px solid #9f7aea;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .contribution-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .contribution-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .contribution-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .contribution-repo {
+            color: #9f7aea;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .contribution-desc {
+            color: #4a5568;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 720px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                border-right: none;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .contact-info {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-container">
+        <div class="header">
+            <div class="language-toggle">
+                <button class="lang-btn active" onclick="switchLanguage('en')" id="enBtn">EN</button>
+                <button class="lang-btn" onclick="switchLanguage('ja')" id="jaBtn">JA</button>
+            </div>
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>
+                        <span class="en-text">Resume (Rirekisho)</span>
+                        <span class="ja-text hidden">履歴書 (Rirekisho)</span>
+                    </h1>
+                    <div class="subtitle">
+                        <span class="en-text">Kunal Chaudhary</span>
+                        <span class="ja-text hidden">クナル - Kunal Chaudhary</span>
+                    </div>
+                    <div class="role">
+                        <span class="en-text">Computer Science Student</span>
+                        <span class="ja-text hidden">コンピュータサイエンス学生</span>
+                    </div>
+                </div>
+                <div class="photo-section" id="photoSection">
+                    <img class="profile-img" src="{% static 'profile/kunal.jpg' %}" alt="Kunal's Professional Photo" >
+                    <span class="en-text hidden">Professional<br>Photo</span>
+                    <span class="ja-text hidden">プロフィール<br>写真</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Personal Information -->
+            <div class="section">
+                <div class="section-header">
+                    👤 <span class="en-text">Personal Information</span>
+                    <span class="ja-text hidden">個人情報 (Personal Information)</span>
+                </div>
+                <div class="section-content">
+                    <div class="info-grid">
+                        <div class="label">
+                            <span class="en-text">Name:</span>
+                            <span class="ja-text hidden">氏名 (Name):</span>
+                        </div>
+                        <div class="value">
+                            <span class="en-text">Kunal Chaudhary</span>
+                            <span class="ja-text hidden">田中 明 (Kunal Chaudhary)</span>
+                        </div>
+                    </div>
+                    <div class="info-grid">
+                        <div class="label">
+                            <span class="en-text">Date of Birth:</span>
+                            <span class="ja-text hidden">生年月日 (DOB):</span>
+                        </div>
+                        <div class="value">June 05, 2005</div>
+                    </div>
+                    <div class="info-grid">
+                        <div class="label">
+                            <span class="en-text">Address:</span>
+                            <span class="ja-text hidden">住所 (Address):</span>
+                        </div>
+                        <div class="value">Uttar Pradesh, India 204101</div>
+                    </div>
+                    <div class="info-grid">
+                        <div class="label">
+                            <span class="en-text">Phone:</span>
+                            <span class="ja-text hidden">電話 (Phone):</span>
+                        </div>
+                        <div class="value">+91 7055586279</div>
+                    </div>
+                    <div class="info-grid">
+                        <div class="label">
+                            <span class="en-text">Email:</span>
+                            <span class="ja-text hidden">メール (Email):</span>
+                        </div>
+                        <div class="value">kunal902770@gmail.com</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Skills -->
+            <div class="section">
+                <div class="section-header">
+                    💻 <span class="en-text">Technical Skills</span>
+                    <span class="ja-text hidden">技術スキル (Technical Skills)</span>
+                </div>
+                <div class="section-content">
+                    <div class="skill-category">
+                        <div class="skill-category-title">
+                            <span class="en-text">Programming Languages:</span>
+                            <span class="ja-text hidden">プログラミング言語:</span>
+                        </div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">SQL</span>
+                           
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <div class="skill-category-title">
+                            <span class="en-text">Frontend & Backend:</span>
+                            <span class="ja-text hidden">フロントエンド・バックエンド:</span>
+                        </div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Django</span>
+                            <span class="skill-tag">Node.js</span>
+                            
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-category-title">
+                            <span class="en-text">Database:</span>
+                            <span class="ja-text hidden">データベース:</span>
+                        </div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">MYSQL</span>
+                            <span class="skill-tag">MongoDB</span>
+                            
+                            
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-category-title">
+                            <span class="en-text"> Tools:</span>
+                            <span class="ja-text hidden">ツール:</span>
+                        </div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">WSL</span>
+                            <span class="skill-tag">Linux</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">Github</span>
+                            <span class="skill-tag">VS Code</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+             <!-- Education -->
+             <div class="section">
+                <div class="section-header">
+                    🎓 <span class="en-text">Education</span>
+                    <span class="ja-text hidden">学歴 (Education)</span>
+                </div>
+                <div class="section-content">
+                    <div class="education-item">
+                        <div class="degree">
+                            <span class="en-text">Bachelor of Science in Computer Science</span>
+                            <span class="ja-text hidden">コンピュータサイエンス学士</span>
+                        </div>
+                        <div class="university">
+                            <span class="en-text">Tokyo Institute of Technology</span>
+                            <span class="ja-text hidden">東京工業大学</span>
+                        </div>
+                        <div class="year">April 2020 - Present (Expected: March 2024)</div>
+                    </div>
+                    
+                    <div class="education-item">
+                        <div class="degree">
+                            <span class="en-text">High School Diploma</span>
+                            <span class="ja-text hidden">高等学校卒業</span>
+                        </div>
+                        <div class="university">
+                            <span class="en-text">Tokyo Metropolitan High School</span>
+                            <span class="ja-text hidden">東京都立高等学校</span>
+                        </div>
+                        <div class="year">April 2017 - March 2020</div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Achievements & Certifications -->
+             <div class="section">
+                <div class="section-header">
+                    🏆 <span class="en-text">Achievements</span>
+                    <span class="ja-text hidden">資格・実績 (Achievements)</span>
+                </div>
+                <div class="section-content">
+                    <div class="achievement-item">
+                        <div class="achievement-title">
+                            <span class="en-text">Dean's List</span>
+                            <span class="ja-text hidden">学部長賞</span>
+                        </div>
+                        <div class="achievement-desc">
+                            <span class="en-text">Maintained GPA above 3.7 for 6 consecutive semesters</span>
+                            <span class="ja-text hidden">6学期連続でGPA 3.7以上を維持</span>
+                        </div>
+                    </div>
+                    
+                    <div class="achievement-item">
+                        <div class="achievement-title">
+                            <span class="en-text">Hackathon Winner</span>
+                            <span class="ja-text hidden">ハッカソン優勝</span>
+                        </div>
+                        <div class="achievement-desc">
+                            <span class="en-text">1st place in Tokyo Tech Code Challenge 2023</span>
+                            <span class="ja-text hidden">東京工業大学コードチャレンジ2023 1位</span>
+                        </div>
+                    </div>
+                    
+                    {% comment %} <div class="achievement-item">
+                        <div class="achievement-title">
+                            <span class="en-text">JLPT N2 Certificate</span>
+                            <span class="ja-text hidden">日本語能力試験N2</span>
+                        </div>
+                        <div class="achievement-desc">
+                            <span class="en-text">Japanese Language Proficiency Test Level 2</span>
+                            <span class="ja-text hidden">日本語能力試験2級</span>
+                        </div>
+                    </div> {% endcomment %}
+                </div>
+            </div>
+
+            <!-- Projects -->
+            <div class="section">
+                <div class="section-header">
+                    🚀 <span class="en-text">Academic Projects</span>
+                    <span class="ja-text hidden">プロジェクト (Academic Projects)</span>
+                </div>
+                <div class="section-content">
+                    <div class="project-item">
+                        <div class="project-name">
+                            <span class="en-text">TastyEats (AI Chefbot)</span>
+                            {% comment %} <span class="ja-text hidden">学生管理システム</span> {% endcomment %}
+                        </div>
+                        <div class="project-tech">HTML/CSS, Javascript, Django, Langchain</div>
+                        <div class="description">
+                            <span class="en-text">Developed a web application for managing student records with CRUD operations and user authentication. Team project for Software Engineering course.</span>
+                            <span class="ja-text hidden">学生記録管理のためのWebアプリケーションを開発。CRUD操作とユーザー認証機能を実装。ソフトウェア工学コースのチームプロジェクト。</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/Kunal9027/Chef_bot" class="project-link" target="_blank">
+                                🔗 GitHub
+                            </a>
+                            <a href="https://resume-projects.onrender.com/chefbot" class="project-link" target="_blank">
+                                🌐 <span class="en-text">Live Demo</span><span class="ja-text hidden">デモ</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="project-item">
+                        <div class="project-name">
+                            <span class="en-text">Weather Prediction App</span>
+                            <span class="ja-text hidden">天気予報アプリ</span>
+                        </div>
+                        <div class="project-tech">Python, Machine Learning, Flask</div>
+                        <div class="description">
+                            <span class="en-text">Built a machine learning model to predict weather patterns using historical data. Final year capstone project.</span>
+                            <span class="ja-text hidden">過去のデータを使用して天気パターンを予測する機械学習モデルを構築。卒業研究プロジェクト。</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/akira-tanaka/weather-prediction" class="project-link" target="_blank">
+                                🔗 GitHub
+                            </a>
+                            <a href="https://weather-predict-ml.herokuapp.com" class="project-link" target="_blank">
+                                🌐 <span class="en-text">Live Demo</span><span class="ja-text hidden">デモ</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Open Source Contributions -->
+            <div class="section">
+                {% comment %} <div class="section-header">
+                    🌟 <span class="en-text">Open Source Contributions</span>
+                    <span class="ja-text hidden">オープンソース貢献</span>
+                </div>
+                <div class="section-content">
+                    <div class="contribution-item">
+                        <div class="contribution-title">
+                            <span class="en-text">React Documentation</span>
+                            <span class="ja-text hidden">React ドキュメント</span>
+                        </div>
+                        <div class="contribution-repo">facebook/react</div>
+                        <div class="contribution-desc">
+                            <span class="en-text">Improved Japanese translation of React hooks documentation. Fixed typos and enhanced code examples for better understanding.</span>
+                            <span class="ja-text hidden">React フックドキュメントの日本語翻訳を改善。タイポの修正とコード例の改良により理解度を向上。</span>
+                        </div>
+                    </div>
+                    
+                    <div class="contribution-item">
+                        <div class="contribution-title">
+                            <span class="en-text">VS Code Extension</span>
+                            <span class="ja-text hidden">VS Code 拡張機能</span>
+                        </div>
+                        <div class="contribution-repo">microsoft/vscode</div>
+                        <div class="contribution-desc">
+                            <span class="en-text">Contributed bug fixes for syntax highlighting in JavaScript files. Submitted 3 pull requests that were successfully merged.</span>
+                            <span class="ja-text hidden">JavaScriptファイルのシンタックスハイライトのバグ修正に貢献。3つのプルリクエストが正常にマージされました。</span>
+                        </div>
+                    </div>
+                    
+                    <div class="contribution-item">
+                        <div class="contribution-title">
+                            <span class="en-text">Node.js Learning Resources</span>
+                            <span class="ja-text hidden">Node.js 学習リソース</span>
+                        </div>
+                        <div class="contribution-repo">nodejs/nodejs.org</div>
+                        <div class="contribution-desc">
+                            <span class="en-text">Added beginner-friendly tutorials and examples to help new developers learn Node.js fundamentals.</span>
+                            <span class="ja-text hidden">新しい開発者がNode.jsの基礎を学ぶための初心者向けチュートリアルと例を追加。</span>
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+
+                <div class="section-header">
+                    🌟 <span class="en-text">Open Source Contributions</span>
+                    <span class="ja-text hidden">オープンソース貢献</span>
+                </div>
+                <div class="section-content">
+                    <div class="contribution-item">
+                        <div class="contribution-title">
+                            <span class="en-text">OSV - Open Source Vulnerabilities</span>
+                            <span class="ja-text hidden">OSV - オープンソース脆弱性</span>
+                        </div>
+                        <div class="contribution-repo">google/osv</div>
+                        <div class="contribution-desc">
+                            <span class="en-text">
+                                • Fixed frontend overflow scrollbar bugs (#3086) to improve cross-browser UI compatibility.<br>
+                                • Matched architecture diagrams with the website's theme for visual consistency (#3308).<br>
+                                • Collaborating with maintainers through pull requests, code reviews, and issue discussions.
+                            </span>
+                            <span class="ja-text hidden">
+                                • フロントエンドのオーバーフロースクロールバーのバグ（#3086）を修正し、クロスブラウザのUI互換性を向上。<br>
+                                • アーキテクチャ図をウェブサイトのテーマに合わせて、視覚的一貫性を実現（#3308）。<br>
+                                • プルリクエストやコードレビュー、イシューでの議論を通じてメンテナと連携。
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                
+
+            </div>
+
+            <!-- Languages & Others -->
+            <div class="section">
+                <div class="section-header">
+                    🌐 <span class="en-text">Languages & Others</span>
+                    <span class="ja-text hidden">言語・その他 (Languages & Others)</span>
+                </div>
+                <div class="section-content">
+
+                    <div class="info-grid">
+                        <div class="label">
+                            <span class="en-text">English:</span>
+                            <span class="ja-text hidden">英語:</span>
+                        </div>
+                        <div class="value">
+                            <span class="en-text">Business Level </span>
+                            <span class="ja-text hidden">ビジネスレベル </span>
+                        </div>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="label">
+                            <span class="en-text">Japanese:</span>
+                            <span class="ja-text hidden">日本語:</span>
+                        </div>
+                        <div class="value">
+                            <span class="en-text">Basic proficiency (learning JLPT N5)</span>
+                            <span class="ja-text hidden">基本的な日本語能力（JLPT N5を勉強中）</span>
+                        </div>                        
+                    </div>
+                    
+                    <div class="info-grid">
+                        <div class="label">GitHub:</div>
+                        <div class="value">github.com/Kunal9027</div>
+                    </div>
+                    {% comment %} <div class="info-grid">
+                        <div class="label">
+                            <span class="en-text">Portfolio:</span>
+                            <span class="ja-text hidden">ポートフォリオ:</span>
+                        </div>
+                        <div class="value">kunal-portfolio.dev</div>
+                    </div> {% endcomment %}
+
+                    {% comment %} <div class="info-grid">
+                        <div class="label">
+                            <span class="en-text">Availability:</span>
+                            <span class="ja-text hidden">入社可能時期:</span>
+                        </div>
+                        <div class="value">
+                            <span class="en-text">
+                                Available for internship/training now.  
+                                Open to full-time roles with exam leave.  
+                                Fully available from April 2026 (post-graduation)
+                            </span>
+                            <span class="ja-text hidden">
+                                現在、インターンシップやトレーニングに参加可能です。  
+                                試験休暇があればフルタイム勤務も可能です。  
+                                卒業後の2026年4月からフルタイムで勤務可能です。
+                            </span>
+                        </div>
+                        
+                        </div>
+                    </div>
+                     {% endcomment %}
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-info">
+            <div class="contact-item" onclick="openTwitter()">
+                <div class="contact-icon">🟦</div>
+                <div class="contact-text">Twitter</div>
+            </div>
+            <div class="contact-item" onclick="openLinkedIn()">
+                <div class="contact-icon">💼</div>
+                <div class="contact-text">LinkedIn</div>
+            </div>
+            <div class="contact-item" onclick="openGitHub()">
+                <div class="contact-icon">🔗</div>
+                <div class="contact-text">GitHub</div>
+            </div>
+            <div class="contact-item" onclick="downloadResume()">
+                <div class="contact-icon">📄</div>
+                <div class="contact-text">Download</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Language switching functionality
+        let currentLanguage = 'en';
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update button states
+            document.getElementById('enBtn').classList.toggle('active', lang === 'en');
+            document.getElementById('jaBtn').classList.toggle('active', lang === 'ja');
+            
+            // Show/hide appropriate text elements
+            const enElements = document.querySelectorAll('.en-text');
+            const jaElements = document.querySelectorAll('.ja-text');
+            
+            if (lang === 'en') {
+                enElements.forEach(el => el.classList.remove('hidden'));
+                jaElements.forEach(el => el.classList.add('hidden'));
+            } else {
+                enElements.forEach(el => el.classList.add('hidden'));
+                jaElements.forEach(el => el.classList.remove('hidden'));
+            }
+        }
+
+        // Photo upload functionality
+        document.getElementById('photoSection').addEventListener('click', function() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const photoSection = document.getElementById('photoSection');
+                        photoSection.style.backgroundImage = `url(${e.target.result})`;
+                        photoSection.style.backgroundSize = 'cover';
+                        photoSection.style.backgroundPosition = 'center';
+                        photoSection.innerHTML = '';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.click();
+        });
+
+        // Contact functions
+         function openTwitter() {
+            window.open('https://x.com/kunal9027', '_blank');
+        } 
+
+        function openLinkedIn() {
+            window.open('https://www.linkedin.com/in/kunal-chaudhary-663688237', '_blank');
+        }
+
+        function openGitHub() {
+            window.open('https://github.com/Kunal9027', '_blank');
+        }
+
+        function downloadResume() {
+            window.print();
+        }
+
+        // Subtle hover effects for skill tags
+        document.querySelectorAll('.skill-tag').forEach(tag => {
+            tag.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px) scale(1.05)';
+            });
+            
+            tag.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add intersection observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

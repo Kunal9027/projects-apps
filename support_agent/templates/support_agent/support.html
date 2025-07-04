@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rakuten Customer Support</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            background: #bf0000;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(191, 0, 0, 0.3);
+            width: 100%;
+            position: relative;
+        }
+
+        .header-content {
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            
+            min-height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo::before {
+            content: "🛍️";
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        .lang-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .lang-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            background: white;
+            flex: 1;
+            {% comment %} border-radius: 15px; {% endcomment %}
+            {% comment %} box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); {% endcomment %}
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .welcome-section {
+            padding: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);
+            transition: all 0.5s ease;
+        }
+
+        .welcome-section.hidden {
+            transform: translateY(-20px);
+            opacity: 0;
+            padding: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .welcome-title {
+            color: #bf0000;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .welcome-subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .input-section {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .main-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .main-input:focus {
+            border-color: #bf0000;
+            box-shadow: 0 0 20px rgba(191, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .main-input::placeholder {
+            color: #999;
+        }
+
+        .faq-section {
+            transition: all 0.5s ease;
+        }
+
+        .faq-section.hidden {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .faq-title {
+            color: #bf0000;
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            padding: 0 30px;
+        }
+
+        .faq-list {
+            display: grid;
+            gap: 15px;
+            padding: 0 30px 30px;
+        }
+
+        .faq-item {
+            background: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faq-item:hover {
+            background: #fff5f5;
+            border-color: #bf0000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(191, 0, 0, 0.1);
+        }
+
+        .faq-item::before {
+            content: "❓";
+            margin-right: 10px;
+            color: #bf0000;
+        }
+
+        .chat-interface {
+            display: none;
+            flex-direction: column;
+            height: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .chat-interface.active {
+            display: flex;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #ffffff 0%, #fff9f9 100%);
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            animation: messageSlide 0.4s ease;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.ai {
+            justify-content: flex-start;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, #bf0000 0%, #d40000 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.ai .message-bubble {
+            background: #f0f0f0;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: #bf0000;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #bf0000 0%, #d40000 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(191, 0, 0, 0.3);
+        }
+
+        .send-btn::after {
+            content: "➤";
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            padding: 12px 18px;
+            background: #f0f0f0;
+            border-radius: 18px;
+            margin-bottom: 15px;
+            border-bottom-left-radius: 4px;
+            max-width: 100px;
+        }
+
+        .typing-indicator.active {
+            display: flex;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #bf0000;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .back-btn {
+            background: rgba(191, 0, 0, 0.1);
+            color: #bf0000;
+            border: 2px solid #bf0000;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 20px;
+            display: none;
+        }
+
+        .back-btn.active {
+            display: block;
+        }
+
+        .back-btn:hover {
+            background: #bf0000;
+            color: white;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .header {
+                padding: 15px;
+            }
+            
+            .header-content {
+                padding: 0 10px;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            .welcome-section {
+                padding: 20px;
+            }
+            
+            .welcome-title {
+                font-size: 24px;
+            }
+            
+            .chat-interface {
+                height: 500px;
+            }
+            
+            .main-content {
+                margin-top: 10px;
+                border-radius: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">Rakuten Support</div>
+            <button class="lang-toggle" onclick="toggleLanguage()">日本語</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        
+        <div class="main-content">
+            <button class="back-btn" onclick="showWelcome()">← Back to FAQ</button>
+            
+            <div class="welcome-section" id="welcomeSection">
+                <h1 class="welcome-title" data-en="How can we help you?" data-ja="どのようにお手伝いできますか？">How can we help you?</h1>
+                <p class="welcome-subtitle" data-en="Ask our AI assistant anything about Rakuten services" data-ja="楽天サービスについて何でもAIアシスタントにお聞きください">Ask our AI assistant anything about Rakuten services</p>
+                
+                <div class="input-section">
+                    <input type="text" class="main-input" id="mainInput" 
+                           placeholder="Type your question here..." 
+                           data-placeholder-en="Type your question here..."
+                           data-placeholder-ja="ここに質問を入力してください...">
+                </div>
+            </div>
+            
+            <div class="faq-section" id="faqSection">
+                <h2 class="faq-title" data-en="Frequently Asked Questions" data-ja="よくある質問">Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item" onclick="selectFAQ(this)" 
+                         data-en="How do I track my order?" 
+                         data-ja="注文の追跡方法は？">How do I track my order?</div>
+                    <div class="faq-item" onclick="selectFAQ(this)" 
+                         data-en="What are the shipping options?" 
+                         data-ja="配送オプションは何ですか？">What are the shipping options?</div>
+                    <div class="faq-item" onclick="selectFAQ(this)" 
+                         data-en="How do I return an item?" 
+                         data-ja="商品の返品方法は？">How do I return an item?</div>
+                    <div class="faq-item" onclick="selectFAQ(this)" 
+                         data-en="How can I earn Rakuten points?" 
+                         data-ja="楽天ポイントの獲得方法は？">How can I earn Rakuten points?</div>
+                    <div class="faq-item" onclick="selectFAQ(this)" 
+                         data-en="What payment methods do you accept?" 
+                         data-ja="どの支払い方法が利用できますか？">What payment methods do you accept?</div>
+                    <div class="faq-item" onclick="selectFAQ(this)" 
+                         data-en="How do I contact customer service?" 
+                         data-ja="カスタマーサービスへの連絡方法は？">How do I contact customer service?</div>
+                </div>
+            </div>
+            
+            <div class="chat-interface" id="chatInterface">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" 
+                           placeholder="Type your message..." 
+                           data-placeholder-en="Type your message..."
+                           data-placeholder-ja="メッセージを入力...">
+                    <button class="send-btn" onclick="sendMessage()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        let currentLanguage = 'en';
+        let messages = [];
+
+        // Language toggle functionality
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'en' ? 'ja' : 'en';
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            const elements = document.querySelectorAll('[data-en]');
+            elements.forEach(element => {
+                if (element.tagName === 'INPUT') {
+                    element.placeholder = element.getAttribute(`data-placeholder-${currentLanguage}`);
+                } else {
+                    element.textContent = element.getAttribute(`data-${currentLanguage}`);
+                }
+            });
+
+            const langToggle = document.querySelector('.lang-toggle');
+            langToggle.textContent = currentLanguage === 'en' ? '日本語' : 'English';
+        }
+
+        // FAQ responses
+        const faqResponses = {
+            en: {
+                "How do I track my order?": "You can track your order by logging into your Rakuten account and visiting the 'Order History' section. You'll find a tracking number that you can use on our shipping partner's website for real-time updates.",
+                "What are the shipping options?": "We offer several shipping options: Standard (3-5 business days), Express (1-2 business days), and Next Day delivery for eligible items. Shipping costs vary based on location and order value.",
+                "How do I return an item?": "To return an item, go to your Order History, select the item you want to return, and click 'Return Item'. You'll receive a prepaid return label. Items must be returned within 30 days of delivery.",
+                "How can I earn Rakuten points?": "You earn 1 point for every ¥100 spent on Rakuten. Points can be earned through purchases, reviews, and special promotions. Use points for future purchases or convert to cash back.",
+                "What payment methods do you accept?": "We accept major credit cards (Visa, MasterCard, JCB, American Express), bank transfers, convenience store payments, and Rakuten Pay. International cards are also accepted.",
+                "How do I contact customer service?": "You can contact us through this chat, email at support@rakuten.co.jp, or call our helpline at 0570-666-910 (9 AM - 6 PM, Monday to Friday)."
+            },
+            ja: {
+                "注文の追跡方法は？": "楽天アカウントにログインして「注文履歴」セクションにアクセスすることで注文を追跡できます。配送パートナーのウェブサイトでリアルタイム更新に使用できる追跡番号が見つかります。",
+                "配送オプションは何ですか？": "いくつかの配送オプションをご用意しています：スタンダード（3-5営業日）、エクスプレス（1-2営業日）、および対象商品の翌日配送。配送料は場所と注文金額によって異なります。",
+                "商品の返品方法は？": "商品を返品するには、注文履歴に移動し、返品したい商品を選択して「商品を返品」をクリックしてください。プリペイド返品ラベルをお送りします。商品は配送から30日以内に返品する必要があります。",
+                "楽天ポイントの獲得方法は？": "楽天で100円お買い上げごとに1ポイント獲得できます。購入、レビュー、特別プロモーションでポイントを獲得できます。ポイントは今後の購入に使用したり、キャッシュバックに変換したりできます。",
+                "どの支払い方法が利用できますか？": "主要なクレジットカード（Visa、MasterCard、JCB、American Express）、銀行振込、コンビニ支払い、楽天ペイを受け付けています。国際カードも利用可能です。",
+                "カスタマーサービスへの連絡方法は？": "このチャット、support@rakuten.co.jpへのメール、またはヘルプライン0570-666-910（月曜日から金曜日の午前9時から午後6時）でお問い合わせいただけます。"
+            }
+        };
+
+        // Initialize
+        document.getElementById('mainInput').addEventListener('focus', showChatInterface);
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function showChatInterface() {
+            document.getElementById('welcomeSection').classList.add('hidden');
+            document.getElementById('faqSection').classList.add('hidden');
+            document.getElementById('chatInterface').classList.add('active');
+            document.querySelector('.back-btn').classList.add('active');
+            
+            // Transfer the input value if any
+            const mainInput = document.getElementById('mainInput');
+            const chatInput = document.getElementById('chatInput');
+            if (mainInput.value.trim()) {
+                chatInput.value = mainInput.value;
+                mainInput.value = '';
+                setTimeout(() => sendMessage(), 500);
+            }
+            chatInput.focus();
+        }
+
+        function showWelcome() {
+            document.getElementById('welcomeSection').classList.remove('hidden');
+            document.getElementById('faqSection').classList.remove('hidden');
+            document.getElementById('chatInterface').classList.remove('active');
+            document.querySelector('.back-btn').classList.remove('active');
+            
+            // Clear chat
+            document.getElementById('chatMessages').innerHTML = '<div class="typing-indicator" id="typingIndicator"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+            messages = [];
+        }
+
+        function selectFAQ(element) {
+            const question = element.textContent;
+            showChatInterface();
+            
+            // Add user message
+            addMessage(question, 'user');
+            
+            // Show typing indicator
+            setTimeout(() => {
+                document.getElementById('typingIndicator').classList.add('active');
+                
+                // Add AI response after delay
+                setTimeout(() => {
+                    document.getElementById('typingIndicator').classList.remove('active');
+                    const response = faqResponses[currentLanguage][question] || 
+                                   "I'm sorry, I don't have a specific answer for that question. Please feel free to ask me anything else about Rakuten services!";
+                    addMessage(response, 'ai'); // Generate AI response
+                }, 1500);
+            }, 500);
+        }
+
+        function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value.trim();
+            
+            if (!message) return;
+            
+            addMessage(message, 'user');
+            chatInput.value = '';
+            
+            // Show typing indicator
+            setTimeout(() => {
+                document.getElementById('typingIndicator').classList.add('active');
+                
+                // Generate AI response
+                setTimeout(() => {
+                    document.getElementById('typingIndicator').classList.remove('active');
+                    const response = generateAIResponse(message);
+                    addMessage(response, 'ai');
+                }, 1000 + Math.random() * 1000);
+            }, 500);
+        }
+
+        function addMessage(text, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.textContent = text;
+            
+            messageDiv.appendChild(bubbleDiv);
+            
+            // Insert before typing indicator
+            const typingIndicator = document.getElementById('typingIndicator');
+            chatMessages.insertBefore(messageDiv, typingIndicator);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Store message
+            messages.push({ text, sender });
+        }
+
+        {% comment %} function generateAIResponse(userMessage) {
+            const responses = currentLanguage === 'en' ? {
+                greetings: [
+                    "Hello! I'm here to help you with any questions about Rakuten services. How can I assist you today?",
+                    "Hi there! Welcome to Rakuten support. What can I help you with?",
+                    "Greetings! I'm your Rakuten AI assistant. Feel free to ask me anything!"
+                ],
+                orders: [
+                    "For order-related questions, you can check your order status in your account dashboard. Would you like me to guide you through the process?",
+                    "I can help you with order tracking, modifications, or cancellations. What specifically would you like to know about your order?"
+                ],
+                points: [
+                    "Rakuten points are earned with every purchase! You get 1 point per ¥100 spent. These points can be used for future purchases or converted to cash back.",
+                    "Great question about points! You can earn bonus points through special campaigns, writing reviews, and using Rakuten services."
+                ],
+                shipping: [
+                    "We offer multiple shipping options to suit your needs. Standard shipping takes 3-5 business days, while express options are available for faster delivery.",
+                    "Shipping costs depend on your location and order value. Orders over ¥3,980 qualify for free standard shipping!"
+                ],
+                default: [
+                    "Thank you for your question! I'm here to help with any Rakuten-related inquiries. Could you please provide more details so I can assist you better?",
+                    "I appreciate you reaching out! While I may not have the exact answer right now, I can connect you with our human support team for more specific assistance.",
+                    "That's an interesting question! For the most accurate information, I recommend checking our help center or speaking with one of our customer service representatives."
+                ]
+            } : {
+                greetings: [
+                    "こんにちは！楽天サービスに関するご質問にお答えします。どのようにお手伝いできますか？",
+                    "こんにちは！楽天サポートへようこそ。何かお手伝いできることはありますか？",
+                    "ご挨拶ありがとうございます！楽天AIアシスタントです。お気軽にお聞きください！"
+                ],
+                orders: [
+                    "ご注文に関するご質問については、アカウントダッシュボードで注文状況を確認できます。手順をご案内しましょうか？",
+                    "注文の追跡、変更、キャンセルについてお手伝いできます。ご注文について具体的に何を知りたいですか？"
+                ],
+                points: [
+                    "楽天ポイントはお買い物のたびに貯まります！100円につき1ポイント獲得できます。これらのポイントは今後のお買い物や現金還元に使用できます。",
+                    "ポイントについて良いご質問ですね！特別キャンペーン、レビュー投稿、楽天サービスの利用でボーナスポイントを獲得できます。"
+                ],
+                shipping: [
+                    "お客様のニーズに合わせて複数の配送オプションをご用意しています。標準配送は3-5営業日、お急ぎの場合はエクスプレス配送もあります。",
+                    "配送料はお客様の地域と注文金額によって異なります。3,980円以上のご注文で標準配送が無料になります！"
+                ],
+                default: [
+                    "ご質問ありがとうございます！楽天に関するお問い合わせにお答えします。より良いサポートのため、詳細を教えていただけますか？",
+                    "お問い合わせいただき、ありがとうございます！正確な回答ができない場合は、人間のサポートチームにおつなぎできます。",
+                    "興味深いご質問ですね！最も正確な情報については、ヘルプセンターをご確認いただくか、カスタマーサービス担当者にお話しいただくことをお勧めします。"
+                ]
+            };
+
+            const lowerMessage = userMessage.toLowerCase();
+            
+            if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('こんにちは') || lowerMessage.includes('はじめまして')) {
+                return responses.greetings[Math.floor(Math.random() * responses.greetings.length)];
+            } else if (lowerMessage.includes('order') || lowerMessage.includes('track') || lowerMessage.includes('注文') || lowerMessage.includes('追跡')) {
+                return responses.orders[Math.floor(Math.random() * responses.orders.length)];
+            } else if (lowerMessage.includes('point') || lowerMessage.includes('ポイント')) {
+                return responses.points[Math.floor(Math.random() * responses.points.length)];
+            } else if (lowerMessage.includes('ship') || lowerMessage.includes('delivery') || lowerMessage.includes('配送') || lowerMessage.includes('配達')) {
+                return responses.shipping[Math.floor(Math.random() * responses.shipping.length)];
+            } else {
+                return responses.default[Math.floor(Math.random() * responses.default.length)];
+            }
+        } {% endcomment %}
+
+        // Initialize language
+        updateLanguage();
+    </script>
+</body>
+</html>
