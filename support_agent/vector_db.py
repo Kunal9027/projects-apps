@@ -28,7 +28,9 @@ def setup_vector_db(path=question_answer_pairs):
     
     qa_data = path
 
-    embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    # embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+
+    embedding_model = HuggingFaceEmbeddings(model_name="bge-small-en-v1.5")
 
     docs = [Document(page_content=item["question"], metadata={"answer": item["answer"]}) for item in qa_data]
 
