@@ -1,3 +1,5 @@
+chroma_store
+
 # ignore vendor static files
 src/static/vendor
 .env

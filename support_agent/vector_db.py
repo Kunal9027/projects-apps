@@ -1,7 +1,7 @@
-from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain.docstore.document import Document
-import json
+# from langchain_community.vectorstores import FAISS
+# from langchain_huggingface import HuggingFaceEmbeddings
+# from langchain.docstore.document import Document
+# import json
 
 
 question_answer_pairs = [
@@ -22,17 +22,51 @@ question_answer_pairs = [
 
 # Load and embed Q&A once
 # def setup_vector_db(path="data.json"):
-def setup_vector_db(path=question_answer_pairs):
+# def setup_vector_db(path=question_answer_pairs):
     # with open(path, "r", encoding="utf-8") as f:
     #     qa_data = json.load(f)
     
-    qa_data = path
+    # qa_data = path
 
-    # embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    # # embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-    embedding_model = HuggingFaceEmbeddings(model_name="bge-small-en-v1.5")
+    # embedding_model = HuggingFaceEmbeddings(model_name="BAAI/bge-small-en-v1.5")
 
-    docs = [Document(page_content=item["question"], metadata={"answer": item["answer"]}) for item in qa_data]
+    # docs = [Document(page_content=item["question"], metadata={"answer": item["answer"]}) for item in qa_data]
 
-    vector_db = FAISS.from_documents(docs, embedding_model)
+    # vector_db = FAISS.from_documents(docs, embedding_model)
+    # return vector_db
+
+
+import os
+from langchain.vectorstores import Chroma
+from langchain.embeddings import HuggingFaceEmbeddings
+from langchain.schema import Document
+
+# Path to save vectorstore files
+VECTOR_DB_DIR = "chroma_store"
+
+def setup_vector_db(path=question_answer_pairs):
+    # Load embedding model
+    embedding_model = HuggingFaceEmbeddings(model_name="BAAI/bge-small-en-v1.5")
+
+    # Check if vectorstore already exists (load it instead of recreating)
+    if os.path.exists(os.path.join(VECTOR_DB_DIR, "index")):
+        print("Loading existing Chroma vectorstore from disk...")
+        vector_db = Chroma(
+            persist_directory=VECTOR_DB_DIR,
+            embedding_function=embedding_model
+        )
+    else:
+        print("Creating new Chroma vectorstore...")
+        qa_data = path
+        docs = [Document(page_content=item["question"], metadata={"answer": item["answer"]}) for item in qa_data]
+
+        vector_db = Chroma.from_documents(
+            docs,
+            embedding_model,
+            persist_directory=VECTOR_DB_DIR
+        )
+        vector_db.persist()  # Save to disk
+
     return vector_db

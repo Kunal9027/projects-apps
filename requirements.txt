@@ -86,3 +86,4 @@ whitenoise
 WMI
 yarl
 zstandard
+chromadb
