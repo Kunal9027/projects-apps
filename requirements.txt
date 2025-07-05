@@ -34,7 +34,7 @@ langchain
 langchain-community
 langchain-core
 langchain-groq
-langchain-huggingface
+
 langchain-text-splitters
 langsmith
 lz4
@@ -64,7 +64,7 @@ requests-toolbelt
 safetensors
 scikit-learn
 scipy
-sentence-transformers
+
 shadowcopy
 six
 sniffio
@@ -74,9 +74,9 @@ sympy
 tenacity
 threadpoolctl
 tokenizers
-torch
+
 tqdm
-transformers
+
 typing-inspect
 typing-inspection
 typing_extensions
@@ -87,3 +87,6 @@ WMI
 yarl
 zstandard
 chromadb
+pinecone-client
+langchain-openai
+openai
