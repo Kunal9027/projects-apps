@@ -137,7 +137,7 @@ def chat_with_user(user_input, session_id="user-1"):
         {"input": user_input},
         config={"configurable": {"session_id": session_id}}
     )
-    print(response.content)
+    
     return response.content
 
 
