@@ -104,12 +104,20 @@ def chat_with_user(user_input, session_id="user-1"):
     prompt = ChatPromptTemplate.from_messages([
                     ("system", f"""
             You are a customer support representative at Rakuten.
-            Please answer the user's questions politely and in the **same language** as the question, based on the FAQ provided below.
+            Please answer the user's questions politely and in the **same language** as the question, based on the FAQ provided below Please answer politely answer"
             If the question is in Japanese, respond in Japanese.  
             If the question is in English, respond in English.
-            Do not make up answers. If the FAQ does not contain the answer, politely advise the user to contact the Rakuten support team.
-            Q: {retrieved_q}
-            A: {retrieved_a}
+            Do not make up answers. If the FAQ does not contain the answer, politely advise the user to contact the Rakuten support team or just say "I do not know the answer" but do not answer made up or other than faqs provided.
+             FAQ
+            Question: {retrieved_q}
+            Answer: {retrieved_a}
+            
+            *and* format your responses using Markdown:
+            - Use **bold** for key terms,
+            - `inline code` for UI labels or commands,
+            - Numbered lists for steps,
+            - [Links](https://...) for URLs,
+            - Blockquotes for warnings or notes.
             """),
         MessagesPlaceholder(variable_name="history"),
         ("human", "{input}")
@@ -129,7 +137,7 @@ def chat_with_user(user_input, session_id="user-1"):
         {"input": user_input},
         config={"configurable": {"session_id": session_id}}
     )
-
+    print(response.content)
     return response.content
 
 
