@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('weather_app.urls')),
     path('', include('portfolio.urls')),
     path('', include('support_agent.urls')),
+    path('', include('chat_bot.urls')),
 ]
 
 
