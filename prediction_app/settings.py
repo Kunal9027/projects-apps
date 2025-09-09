@@ -50,9 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'weather_app',
+    
     'ai_app',
-    'portfolio',
+    
     'support_agent',
     'rest_framework',
     'corsheaders',
