@@ -43,30 +43,3 @@ class ChatAPIView(APIView):
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 
-# # pdfapi/views.py
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
-# from rest_framework import status
-# from PyPDF2 import PdfReader
-# from .agent import chat_with_user
-
-# class PDFUploadView(APIView):
-#     def post(self, request, format=None):
-#         file = request.FILES.get('file')
-#         if not file:
-#             return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
-        
-#         try:
-#             reader = PdfReader(file)
-#             text = ""
-#             for page in reader.pages:
-#                 page_text = page.extract_text()
-#                 if page_text:
-#                     text += page_text + "\n"
-                
-#              chat_with_user(text)   
-                
-                
-#             return Response({"text": text}, status=status.HTTP_200_OK)
-#         except Exception as e:
-#             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -26,57 +26,6 @@ def get_session_history(session_id: str) -> BaseChatMessageHistory:
         history_store[session_id] = ChatMessageHistory()
     return history_store[session_id]
 
-# def chat_with_user(user_input, session_id="user-1",pdf_text):
-    
-#     vector_db = setup_vector_db(pdf_text) if pdf_text else None
-    
-#     # Search in vector DB for FAQ
-#     results = vector_db.similarity_search(user_input, k=3)
-#     if not results:
-#         return "No relevant text found"
-
-#     retrieved_text = results[0].page_content
-
-#     # Build FAQ context string
-#     faq_context = f"{retrieved_text}" if retrieved_text else "No relevant FAQ found."
-
-#     # Prompt template
-#     prompt = ChatPromptTemplate.from_messages([
-#         ("system", """
-#             You are a  support AI agent and your job is to help users using provided pdf data.
-#             Answer politely, concisely, quick to read, in the same language as the question.
-#             Do not make up answers. If the pdf data does not contain the answer, politely advise the user to ask something else or just say this information is not in the document.
-#             Format responses in Markdown.
-#         """),
-#         MessagesPlaceholder(variable_name="history"),
-#         ("human", "{input}"),
-#         ("system", "FAQ Context:\n{faq_context}")
-#     ])
-
-#     # Build chain
-#     chain = prompt | llm
-
-#     # Add memory
-#     chain_with_memory = RunnableWithMessageHistory(
-#         chain,
-#         get_session_history,
-#         input_messages_key="input",
-#         history_messages_key="history",
-#     )
-
-#     # Invoke with faq_context included
-#     response = chain_with_memory.invoke(
-#         {
-#             "input": user_input,
-#             "faq_context": faq_context,
-#         },
-#         config={"configurable": {"session_id": session_id}}
-#     )
-
-#     return response.content
-
-
-
 def chat_with_user(user_input, session_id="user-1"):
     vector_db = get_vector_db(session_id)
     if not vector_db:
